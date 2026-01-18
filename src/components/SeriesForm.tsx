@@ -6,7 +6,7 @@ import { Input } from './ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import type { Series, SeriesStatus } from '../types';
 import { useState } from 'react';
-import { Upload, X } from 'lucide-react';
+import { Upload, X, Check } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 const seriesSchema = z.object({
@@ -117,7 +117,7 @@ export function SeriesForm({ initialData, onSubmit, isSubmitting }: SeriesFormPr
                     <div className="space-y-4">
                         <div className="space-y-2">
                             <label className="text-sm font-medium">Title *</label>
-                            <Input {...form.register('title')} placeholder="Series Title" />
+                            <Input {...form.register('title')} placeholder="Series Title" className="placeholder:text-muted-foreground/40" />
                             {form.formState.errors.title && (
                                 <p className="text-xs text-destructive">{form.formState.errors.title.message}</p>
                             )}
@@ -126,41 +126,45 @@ export function SeriesForm({ initialData, onSubmit, isSubmitting }: SeriesFormPr
                         <div className="grid grid-cols-3 gap-4">
                             <div className="space-y-2">
                                 <label className="text-sm font-medium">Year</label>
-                                <Input type="number" {...form.register('year')} placeholder="2024" />
+                                <Input type="number" {...form.register('year')} placeholder="2024" className="placeholder:text-muted-foreground/40" />
                             </div>
                             <div className="space-y-2">
                                 <label className="text-sm font-medium">Seasons</label>
-                                <Input type="number" {...form.register('seasons')} placeholder="1" />
+                                <Input type="number" {...form.register('seasons')} placeholder="1" className="placeholder:text-muted-foreground/40" />
                             </div>
                             <div className="space-y-2">
                                 <label className="text-sm font-medium">Episodes</label>
-                                <Input type="number" {...form.register('episodes')} placeholder="10" />
+                                <Input type="number" {...form.register('episodes')} placeholder="10" className="placeholder:text-muted-foreground/40" />
                             </div>
                         </div>
 
                         <div className="space-y-2">
                             <label className="text-sm font-medium">Status</label>
                             <div className="flex flex-wrap gap-2">
-                                {statuses.map((s) => (
-                                    <button
-                                        key={s}
-                                        type="button"
-                                        onClick={() => {
-                                            form.setValue('status', s, {
-                                                shouldValidate: true,
-                                                shouldDirty: true,
-                                                shouldTouch: true
-                                            });
-                                        }}
-                                        className={cn(
-                                            "rounded-full border px-3 py-1 text-sm transition-colors",
-                                            form.watch('status') === s
-                                                ? "bg-primary text-primary-foreground border-primary"
-                                                : "bg-background hover:bg-secondary"
-                                        )}
-                                    >
-                                        {s}
-                                    </button>
+                                import {Upload, X, Check} from 'lucide-react';
+                                // ... (imports)
+
+                                // ... (inside component)
+                                <button
+                                    key={s}
+                                    type="button"
+                                    onClick={() => {
+                                        form.setValue('status', s, {
+                                            shouldValidate: true,
+                                            shouldDirty: true,
+                                            shouldTouch: true
+                                        });
+                                    }}
+                                    className={cn(
+                                        "rounded-full border px-3 py-1 text-sm transition-all flex items-center gap-1.5",
+                                        form.watch('status') === s
+                                            ? "bg-primary text-primary-foreground border-primary shadow-sm"
+                                            : "bg-background hover:bg-secondary text-muted-foreground"
+                                    )}
+                                >
+                                    {form.watch('status') === s && <Check className="h-3.5 w-3.5" />}
+                                    {s}
+                                </button>
                                 ))}
                             </div>
                         </div>
@@ -182,18 +186,18 @@ export function SeriesForm({ initialData, onSubmit, isSubmitting }: SeriesFormPr
 
                         <div className="space-y-2">
                             <label className="text-sm font-medium">Platform</label>
-                            <Input {...form.register('platform')} placeholder="Netflix, Shahid, etc." />
+                            <Input {...form.register('platform')} placeholder="Netflix, Shahid, etc." className="placeholder:text-muted-foreground/40" />
                         </div>
 
                         <div className="space-y-2">
                             <label className="text-sm font-medium">Tags</label>
-                            <Input {...form.register('tags')} placeholder="Drama, Action, Romance (comma separated)" />
+                            <Input {...form.register('tags')} placeholder="Drama, Action, Romance" className="placeholder:text-muted-foreground/40" />
                         </div>
 
                         <div className="space-y-2">
                             <label className="text-sm font-medium">Notes</label>
                             <textarea
-                                className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                                 {...form.register('notes')}
                                 placeholder="Write your review or notes..."
                             />
