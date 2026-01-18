@@ -141,30 +141,27 @@ export function SeriesForm({ initialData, onSubmit, isSubmitting }: SeriesFormPr
                         <div className="space-y-2">
                             <label className="text-sm font-medium">Status</label>
                             <div className="flex flex-wrap gap-2">
-                                import {Upload, X, Check} from 'lucide-react';
-                                // ... (imports)
-
-                                // ... (inside component)
-                                <button
-                                    key={s}
-                                    type="button"
-                                    onClick={() => {
-                                        form.setValue('status', s, {
-                                            shouldValidate: true,
-                                            shouldDirty: true,
-                                            shouldTouch: true
-                                        });
-                                    }}
-                                    className={cn(
-                                        "rounded-full border px-3 py-1 text-sm transition-all flex items-center gap-1.5",
-                                        form.watch('status') === s
-                                            ? "bg-primary text-primary-foreground border-primary shadow-sm"
-                                            : "bg-background hover:bg-secondary text-muted-foreground"
-                                    )}
-                                >
-                                    {form.watch('status') === s && <Check className="h-3.5 w-3.5" />}
-                                    {s}
-                                </button>
+                                {statuses.map((s) => (
+                                    <button
+                                        key={s}
+                                        type="button"
+                                        onClick={() => {
+                                            form.setValue('status', s, {
+                                                shouldValidate: true,
+                                                shouldDirty: true,
+                                                shouldTouch: true
+                                            });
+                                        }}
+                                        className={cn(
+                                            "rounded-full border px-3 py-1 text-sm transition-all flex items-center gap-1.5",
+                                            form.watch('status') === s
+                                                ? "bg-primary text-primary-foreground border-primary shadow-sm"
+                                                : "bg-background hover:bg-secondary text-muted-foreground"
+                                        )}
+                                    >
+                                        {form.watch('status') === s && <Check className="h-3.5 w-3.5" />}
+                                        {s}
+                                    </button>
                                 ))}
                             </div>
                         </div>
